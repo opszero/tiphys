@@ -1,3 +1,3 @@
-# Helm (Django)
+# Helm Library
 
-Example Helm Django Deployment with Celery, Celery Beat, Cronjobs
+Helm Library used by opsZero.
