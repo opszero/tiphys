@@ -1,3 +1,3 @@
-# OpsZero Helm Chart Library
+# Helm Base (Library)
 
-Simple Helm Library to Abstract Deployments, Jobs, Services, Ingress, CronJobs
+Helm Library to Abstract Deployments, Jobs, Services, Ingress, CronJobs
