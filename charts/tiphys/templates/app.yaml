@@ -20,8 +20,8 @@ spec:
       restartPolicy: Never
       containers:
         - name: {{ include "opszero.fullname" $ }}
-          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
-          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          image: "{{ $.Values.image.repository }}"
+          imagePullPolicy: Always
           command: ["bash", "-c", {{ $job.command | join " " | quote}}]
           envFrom:
             - secretRef:
@@ -64,8 +64,8 @@ spec:
     spec:
       containers:
         - name: {{ $.Chart.Name }}
-          image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
-          imagePullPolicy: {{ $.Values.image.pullPolicy }}
+          image: "{{ $.Values.image.repository }}"
+          imagePullPolicy: Always
           envFrom:
             - secretRef:
                 name: {{ template "opszero.fullname" $ }}
@@ -153,8 +153,8 @@ spec:
           restartPolicy: Never
           containers:
             - name: app
-              image: "{{ $.Values.image.repository }}:{{ $.Values.image.tag }}"
-              imagePullPolicy: {{ $.Values.image.pullPolicy }}
+              image: "{{ $.Values.image.repository }}"
+              imagePullPolicy: Always
               command: ["bash", "-c", {{ $cronjob.command | join " " | quote}}]
               envFrom:
                 - secretRef:
