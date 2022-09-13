@@ -128,7 +128,7 @@ spec:
               service:
                 name: {{ include "opszero.fullname" $ }}-{{ $app.name }}
                 port:
-                  number: {{ $app.port }}
+                  number: {{ $app.service.port }}
           {{- end }}
     {{- end }}
 {{- end -}}
