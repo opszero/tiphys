@@ -1,6 +1,6 @@
 {{- range $app := .Values.apps }}
 
-{{- range $job := $app.job }}
+{{- range $job := $app.jobs }}
 ---
 apiVersion: batch/v1
 kind: Job

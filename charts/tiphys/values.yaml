@@ -9,7 +9,7 @@ service:
   type: ClusterIP
 
 image:
-  repository: 451305228097.dkr.ecr.us-west-2.amazonaws.com/opszero
+  repository: nginx
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
@@ -41,85 +41,7 @@ securityContext: {}
   # runAsUser: 1000
 
 apps:
-  - name: makeprospect
-    isStatic: true
-    type: ClusterIP
-    port: 8000
-    hosts:
-      - host: makeprospect.com
-        paths: ["/"]
-    cronjobs:
-      - name: hn
-        command: ["python", "manage.py", "makeprospect_hn"]
-        schedule: "*/15 * * * *"
-      - name: rss
-        command: ["python", "manage.py", "makeprospect_rss"]
-        schedule: "*/15 * * * *"
-      - name: jobs-run
-        command: ["python", "manage.py", "makeprospect_jobs_run"]
-        schedule: "*/15 * * * *"
-      - name: job-posts-qualify-uncategorized
-        command: ["python", "manage.py", "makeprospect_job_posts_qualify_uncategorized"]
-        schedule: "*/15 * * * *"
-      - name: job-posts-qualify-ai-draft
-        command: ["python", "manage.py", "makeprospect_job_posts_qualify_ai_draft"]
-        schedule: "*/15 * * * *"
-  - name: opszero
-    isStatic: false
-    type: ClusterIP
-    port: 8000
-    hosts:
-      - host: www.opszero.com
-        paths: ["/"]
-    cronjobs:
-      - name: support-sync
-        command: ["cd", "opszero/cloud/support", "&&", "support_sync.js"]
-        schedule: "0 * * * *"
-      - name: invoices-download
-        command: ["python", "manage.py", "invoices_download"]
-        schedule: "0 */4 * * *"
-      - name: database-watcher
-        command: ["python", "manage.py", "database_watcher"]
-        schedule: "0/30 * * * *"
-      - name: kubernetes-watcher
-        command: ["python", "manage.py", "kubernetes_watcher"]
-        schedule: "0/30 * * * *"
-      - name: task-add-issues-to-projects
-        command: ["gh auth login", "&&", "python manage.py task_add_issues_to_projects"]
-        schedule: "0/30 * * * *"
-  - name: capital
-    isStatic: true
-    type: ClusterIP
-    port: 8000
-    hosts:
-      - host: yerracapital.com
-        paths: ["/"]
-    cronjobs:
-      - name: stock-download-symbols
-        command: ["python", "manage.py", "stocks_download_symbols"]
-        schedule: "0 2 * * *"
-      - name: coin-download-symbols
-        command: ["python", "manage.py", "coins_download_symbols"]
-        schedule: "0 2 * * *"
-      - name: sync-stock-with-cik
-        command: ["python", "manage.py", "sync_stock_with_cik"]
-        schedule: "0 0 * * *"
-      - name: update-key-stats
-        command: ["python", "manage.py", "update_key_stats"]
-        schedule: "0 0 * * *"
-      - name: drawdown-crawl
-        command: ["python", "manage.py", "drawdown_crawl"]
-        schedule: "0 0 * * *"
-  - name: suryaproperties
-    isStatic: true
-    type: ClusterIP
-    port: 8000
-    hosts:
-      - host: v6.surya.properties
-        paths: ["/"]
-    job:
-      - name: build-and-deploy-suryaproperties
-        command: ["make", "build-and-deploy-suryaproperties"]
+
 
 ingress:
   annotations: {}
