@@ -3,6 +3,16 @@ entries:
   tiphys:
   - apiVersion: v2
     appVersion: 1.16.0
+    created: "2022-09-13T19:07:28.39842731Z"
+    description: A Helm chart for Kubernetes
+    digest: d15fc747f6b568cf1199556e16ae915cdad4c401a6cf079db9c93536a21ee553
+    name: tiphys
+    type: application
+    urls:
+    - https://github.com/opszero/tiphys/releases/download/tiphys-0.1.7/tiphys-0.1.7.tgz
+    version: 0.1.7
+  - apiVersion: v2
+    appVersion: 1.16.0
     created: "2022-09-13T18:56:59.612558296Z"
     description: A Helm chart for Kubernetes
     digest: 657a0abcc377a4dd0bb35ffda5b1080bba941dec5880df32dce4f20d11e00736
@@ -61,4 +71,4 @@ entries:
     urls:
     - https://github.com/opszero/tiphys/releases/download/tiphys-0.1.1/tiphys-0.1.1.tgz
     version: 0.1.1
-generated: "2022-09-13T18:56:59.612583296Z"
+generated: "2022-09-13T19:07:28.398470511Z"
