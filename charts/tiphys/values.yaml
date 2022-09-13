@@ -120,13 +120,6 @@ apps:
     job:
       - name: build-and-deploy-suryaproperties
         command: ["make", "build-and-deploy-suryaproperties"]
-  yieldpayroll:
-    isStatic: true
-    type: ClusterIP
-    port: 8000
-    hosts:
-      - host: yieldpayroll.com
-        paths: ["/"]
 
 ingress:
   annotations: {}
