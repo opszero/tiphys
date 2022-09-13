@@ -73,7 +73,7 @@ spec:
             value: {{ $app.name }}
           ports:
             - name: http
-              containerPort: {{ $app.port }}
+              containerPort: {{ $app.service.port }}
               protocol: TCP
 ---
 apiVersion: keda.sh/v1alpha1
