@@ -28,7 +28,7 @@ spec:
                 name: {{ template "opszero.fullname" $ }}
 {{- end }}
 
-{{- if $app.isStatic }}
+{{- if $app.service.enabled }}
 {{- else }}
 ---
 apiVersion: v1
@@ -87,8 +87,8 @@ spec:
   scaleTargetRef:
     name: {{ include "opszero.fullname" $ }}-{{ $app.name }}
     kind: Deployment
-  minReplicaCount: 2 #{{ $.Values.autoscaling.minReplicas }}
-  maxReplicaCount: 4 #{{ $.Values.autoscaling.maxReplicas }}
+  minReplicaCount: {{ $.Values.autoscaling.minReplicas }}
+  maxReplicaCount: {{ $.Values.autoscaling.maxReplicas }}
   cooldownPeriod: 60
   triggers:
   - type: cpu
