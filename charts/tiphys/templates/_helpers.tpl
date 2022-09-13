@@ -47,15 +47,6 @@ Selector labels
 */}}
 {{- define "opszero.selectorLabels" -}}
 app.kubernetes.io/name: {{ include "opszero.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
-{{- end }}
-
-{{/*
-Selector labels for Flower
-*/}}
-{{- define "opszero.selectorFlowerLabels" -}}
-app.kubernetes.io/name: {{ include "opszero.name" . }}-flower
-app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
 {{/*

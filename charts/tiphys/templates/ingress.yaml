@@ -18,16 +18,16 @@ metadata:
   {{- end }}
 spec:
   rules:
-    {{- range .Values.service.hosts }}
+    {{- range .Values.flowerService.hosts }}
     - host: {{ .host | quote }}
       http:
         paths:
           {{- range .paths }}
-          - path: {{ . }}
+          - path: {{ . | quote }}
             pathType: Prefix
             backend:
               service:
-                name: {{ $fullName }}
+                name: {{ $fullName }}-flower
                 port:
                   number: {{ $svcPort }}
           {{- end }}

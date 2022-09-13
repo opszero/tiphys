@@ -4,8 +4,12 @@
 
 replicaCount: 2
 
+service:
+  port: 8000
+  type: ClusterIP
+
 image:
-  repository: nginx
+  repository: 451305228097.dkr.ecr.us-west-2.amazonaws.com/opszero
   pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: "latest"
@@ -36,35 +40,112 @@ securityContext: {}
   # runAsNonRoot: true
   # runAsUser: 1000
 
-service:
-  enabled: true
-  type: ClusterIP
-  port: 80
-  hosts:
-    - host: www.opszero.com
-      paths: ["/"]
-    - host: opszero.com
-      paths: ["/"]
+apps:
+  - name: makeprospect
+    isStatic: true
+    type: ClusterIP
+    port: 8000
+    hosts:
+      - host: makeprospect.com
+        paths: ["/"]
+    cronjobs:
+      - name: hn
+        command: ["python", "manage.py", "makeprospect_hn"]
+        schedule: "*/15 * * * *"
+      - name: rss
+        command: ["python", "manage.py", "makeprospect_rss"]
+        schedule: "*/15 * * * *"
+      - name: jobs-run
+        command: ["python", "manage.py", "makeprospect_jobs_run"]
+        schedule: "*/15 * * * *"
+      - name: job-posts-qualify-uncategorized
+        command: ["python", "manage.py", "makeprospect_job_posts_qualify_uncategorized"]
+        schedule: "*/15 * * * *"
+      - name: job-posts-qualify-ai-draft
+        command: ["python", "manage.py", "makeprospect_job_posts_qualify_ai_draft"]
+        schedule: "*/15 * * * *"
+  - name: opszero
+    isStatic: false
+    type: ClusterIP
+    port: 8000
+    hosts:
+      - host: www.opszero.com
+        paths: ["/"]
+    cronjobs:
+      - name: support-sync
+        command: ["cd", "opszero/cloud/support", "&&", "support_sync.js"]
+        schedule: "0 * * * *"
+      - name: invoices-download
+        command: ["python", "manage.py", "invoices_download"]
+        schedule: "0 */4 * * *"
+      - name: database-watcher
+        command: ["python", "manage.py", "database_watcher"]
+        schedule: "0/30 * * * *"
+      - name: kubernetes-watcher
+        command: ["python", "manage.py", "kubernetes_watcher"]
+        schedule: "0/30 * * * *"
+      - name: task-add-issues-to-projects
+        command: ["gh auth login", "&&", "python manage.py task_add_issues_to_projects"]
+        schedule: "0/30 * * * *"
+  - name: capital
+    isStatic: true
+    type: ClusterIP
+    port: 8000
+    hosts:
+      - host: yerracapital.com
+        paths: ["/"]
+    cronjobs:
+      - name: stock-download-symbols
+        command: ["python", "manage.py", "stocks_download_symbols"]
+        schedule: "0 2 * * *"
+      - name: coin-download-symbols
+        command: ["python", "manage.py", "coins_download_symbols"]
+        schedule: "0 2 * * *"
+      - name: sync-stock-with-cik
+        command: ["python", "manage.py", "sync_stock_with_cik"]
+        schedule: "0 0 * * *"
+      - name: update-key-stats
+        command: ["python", "manage.py", "update_key_stats"]
+        schedule: "0 0 * * *"
+      - name: drawdown-crawl
+        command: ["python", "manage.py", "drawdown_crawl"]
+        schedule: "0 0 * * *"
+  - name: suryaproperties
+    isStatic: true
+    type: ClusterIP
+    port: 8000
+    hosts:
+      - host: v6.surya.properties
+        paths: ["/"]
+    job:
+      - name: build-and-deploy-suryaproperties
+        command: ["make", "build-and-deploy-suryaproperties"]
+  yieldpayroll:
+    isStatic: true
+    type: ClusterIP
+    port: 8000
+    hosts:
+      - host: yieldpayroll.com
+        paths: ["/"]
 
 ingress:
   annotations: {}
     # kubernetes.io/ingress.class: nginx
     # kubernetes.io/tls-acme: "true"
 
-resources:
-  limits:
-    cpu: "1"
-    memory: "1024Mi"
-  requests:
-    cpu: "0.1"
-    memory: "128Mi"
+resources: {}
+  # limits:
+  #   cpu: "1"
+  #   memory: "1024Mi"
+  # requests:
+  #   cpu: "0.1"
+  #   memory: "128Mi"
 
 autoscaling:
-  enabled: true
-  minReplicas: 10
-  maxReplicas: 40
-  targetCPUUtilizationPercentage: 15
-  targetMemoryUtilizationPercentage: 70
+  minReplicas: 2
+  maxReplicas: 4
+  targetCPUUtilizationPercentage: 99
+  targetMemoryUtilizationPercentage: 99
 
 nodeSelector: {}
 
@@ -72,14 +153,20 @@ tolerations: []
 
 affinity: {}
 
-secrets:
-  DATABASE_NAME: ""
-  DATABASE_USER: canalapi
-  DATABASE_PASSWORD: ""
-  DATABASE_HOST: ""
-  REDIS_URL: ""
-  CELERY_BROKER_URL: ""
-  DJANGO_SETTINGS_MODULE: "opszero.settings"
-  DJANGO_ADMIN_URL: "admin"
-  ENVIRONMENT: "develop"
-  FLOWER_BASIC_AUTH: "opszero:foobarpassword"
+secrets: {}
+
+celeryQueues:
+  - name: default
+    concurrency: 8
+    replicaCount: 2
+    resources: {}
+
+redis:
+  auth:
+    enabled: false
+  master:
+    persistence:
+      enabled: false
+  replica:
+    persistence:
+      enabled: false

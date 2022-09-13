@@ -16,15 +16,10 @@ spec:
     spec:
       restartPolicy: Never
       containers:
-        - name: {{ include "opszero.fullname" . }}-db-migrate
+        - name: {{ include "opszero.fullname" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           command: ["python", "manage.py", "migrate"]
           envFrom:
             - secretRef:
                 name: {{ template "opszero.fullname" . }}
-          env:
-            - name: DD_AGENT_HOST
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
