@@ -29,7 +29,6 @@ spec:
 {{- end }}
 
 {{- if $app.service.enabled }}
-{{- else }}
 ---
 apiVersion: v1
 kind: Service
