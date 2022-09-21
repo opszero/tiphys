@@ -117,6 +117,7 @@ metadata:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 spec:
+  ingressClassName: nginx
   rules:
     {{- range $app.service.hosts }}
     - host: {{ .host | quote }}
