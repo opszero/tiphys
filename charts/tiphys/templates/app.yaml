@@ -1,5 +1,4 @@
 {{- range $app := .Values.apps }}
-
 {{- range $job := $app.jobs }}
 ---
 apiVersion: batch/v1
@@ -20,7 +19,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: {{ include "opszero.fullname" $ }}
-          image: "{{ $.Values.image.repository }}"
+          image: {{ default $.Values.defaultImage $app.image | quote }}
           imagePullPolicy: Always
           command: ["bash", "-c", {{ $job.command | join " " | quote}}]
           envFrom:
@@ -63,7 +62,7 @@ spec:
     spec:
       containers:
         - name: {{ $.Chart.Name }}
-          image: "{{ $.Values.image.repository }}"
+          image: {{ default $.Values.defaultImage $app.image | quote }}
           imagePullPolicy: Always
           envFrom:
             - secretRef:
@@ -159,7 +158,7 @@ spec:
           restartPolicy: Never
           containers:
             - name: app
-              image: "{{ $.Values.image.repository }}"
+              image: {{ default $.Values.defaultImage $app.image | quote }}
               imagePullPolicy: Always
               command: ["bash", "-c", {{ $cronjob.command | join " " | quote}}]
               envFrom:

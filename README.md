@@ -13,6 +13,10 @@ helm upgrade --install yieldpay tiphys/tiphys -f ./charts/payroll.yaml --set ima
 ./stage.yaml
 
 ```
+
+# Default image for all the apps. If an image isn't specified this one is used.
+defaultImage: nginx:latest
+
 apps:
   - name: payroll
     service:
@@ -29,7 +33,23 @@ apps:
       - name: hn
         command: ["bundle", "exec", "rails", "pay_people"]
         schedule: "0 * * * *"
-        
+  - name: payroll
+    image: foobar:latest
+    service:
+      enabled: true
+      type: ClusterIP
+      port: 3000
+      hosts:
+        - host: yieldpayroll.com
+          paths: ["/"]
+    jobs:
+      - name: db-migrate
+        command: "bundle exec rake db:migrate"
+    cronjobs:
+      - name: hn
+        command: ["bundle", "exec", "rails", "pay_people"]
+        schedule: "0 * * * *"
+
 secrets:
   KEY_NAME: "Value"
 ```

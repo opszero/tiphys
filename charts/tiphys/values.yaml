@@ -1,14 +1,4 @@
-# Default values for opszero.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-service:
-  port: 8000
-  type: ClusterIP
-
-image:
-  repository: nginx
-
+defaultImage: ""
 imagePullSecrets: []
 nameOverride: ""
 
@@ -33,9 +23,6 @@ securityContext: {}
   # readOnlyRootFilesystem: true
   # runAsNonRoot: true
   # runAsUser: 1000
-
-apps:
-
 
 ingress:
   annotations: {}
