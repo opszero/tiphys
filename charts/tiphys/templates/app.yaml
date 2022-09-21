@@ -135,7 +135,7 @@ spec:
   tls:
     - hosts:
     {{- range $app.service.hosts }}
-        - www.example.com
+        - {{ .host }}
     {{- end }}
       secretName: {{ include "opszero.fullname" $ }}-{{ $app.name }}-tls
 {{- end -}}
