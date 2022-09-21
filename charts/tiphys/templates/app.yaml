@@ -132,6 +132,12 @@ spec:
                   number: {{ $app.service.port }}
           {{- end }}
     {{- end }}
+  tls:
+    - hosts:
+    {{- range $app.service.hosts }}
+        - www.example.com
+    {{- end }}
+      secretName: {{ include "opszero.fullname" $ }}-{{ $app.name }}-tls
 {{- end -}}
 
 {{- range $cronjob := $app.cronjobs }}
