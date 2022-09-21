@@ -29,4 +29,7 @@ apps:
       - name: hn
         command: ["bundle", "exec", "rails", "pay_people"]
         schedule: "0 * * * *"
+        
+secrets:
+  KEY_NAME: "Value"
 ```
