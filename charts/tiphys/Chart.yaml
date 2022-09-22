@@ -22,7 +22,7 @@ version: 0.3.0
 # follow Semantic Versioning. They should reflect the version the application is using.
 appVersion: 1.16.0
 
-dependencies: []
-#   - name: redis
-#     version: 17.0.9
-#     repository: https://charts.bitnami.com/bitnami
+dependencies:
+  - name: redis
+    version: 17.0.9
+    repository: https://charts.bitnami.com/bitnami
