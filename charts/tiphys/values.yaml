@@ -58,6 +58,7 @@ celeryQueues:
     resources: {}
 
 redis:
+  enabled: false
   auth:
     enabled: false
   master:
