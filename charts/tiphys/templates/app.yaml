@@ -57,6 +57,8 @@ spec:
       {{- include "opszero.selectorLabels" $ | nindent 6 }}-{{ $app.name }}
   template:
     metadata:
+      annotations:
+        rollme: {{ randAlphaNum 5 | quote }}
       labels:
       {{- include "opszero.selectorLabels" $ | nindent 8 }}-{{ $app.name }}
     spec:
