@@ -74,9 +74,9 @@ spec:
             - name: http
               containerPort: {{ $app.service.port }}
               protocol: TCP
-          {{ $app.service.lifecycle }}
-          {{ $app.service.livenessProbe }}
-          {{ $app.service.readinessProbe }}
+          {{- with $app.service.healthChecks }}
+          {{ toYaml . | nindent 10 }}
+          {{- end }}
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
