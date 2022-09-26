@@ -42,6 +42,33 @@ apps:
       hosts:
         - host: yieldpayroll.com
           paths: ["/"]
+      lifecycle:
+        preStop:
+          exec:
+            command:
+              - /bin/sh
+              - -c
+              - sleep 60
+      livenessProbe:
+        failureThreshold: 15
+        initialDelaySeconds: 120
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 30
+        httpGet:
+          path: /healthcheck
+          port: 3000
+      readinessProbe:
+        failureThreshold: 15
+        initialDelaySeconds: 120
+        periodSeconds: 10
+        successThreshold: 1
+        timeoutSeconds: 30
+        httpGet:
+        httpGet:
+          path: /healthcheck
+          port: 3000
+
     jobs:
       - name: db-migrate
         command: "bundle exec rake db:migrate"
