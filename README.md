@@ -82,4 +82,5 @@ apps:
 
 secrets:
   KEY_NAME: "Value"
+  KEY_NAME2: "Value"
 ```
