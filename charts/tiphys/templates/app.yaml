@@ -79,6 +79,10 @@ spec:
             - name: http
               containerPort: {{ $app.service.port }}
               protocol: TCP
+          {{- if $app.service.resources }}
+          resources:
+            {{- toYaml $app.service.resources | nindent 12 }}
+          {{- end }}
           {{- with $app.service.healthChecks }}
           {{ toYaml . | nindent 10 }}
           {{- end }}
