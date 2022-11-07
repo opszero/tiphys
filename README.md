@@ -29,6 +29,13 @@ apps:
       hosts:
         - host: yieldpayroll.com
           paths: ["/"]
+      resources:
+        requests:
+          memory: "64Mi"
+          cpu: "250m"
+        limits:
+          memory: "128Mi"
+          cpu: "500m"
     jobs:
       - name: db-migrate
         command: "bundle exec rake db:migrate"
