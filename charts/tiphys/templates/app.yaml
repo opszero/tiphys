@@ -172,5 +172,7 @@ spec:
               envFrom:
                 - secretRef:
                     name: {{ template "opszero.fullname" $ }}
+              resources:
+                {{- toYaml $cronjob.resources | nindent 16 }}
 {{- end }}
 {{- end }}
