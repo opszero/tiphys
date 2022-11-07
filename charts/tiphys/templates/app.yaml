@@ -66,6 +66,9 @@ spec:
         - name: {{ $.Chart.Name }}
           image: {{ default $.Values.defaultImage $app.image | quote }}
           imagePullPolicy: Always
+          {{- if $app.service.command }}
+          command: ["bash", "-c", {{ $app.service.command | join " " | quote}}]
+          {{- end }}
           envFrom:
             - secretRef:
                 name: {{ template "opszero.fullname" $ }}
