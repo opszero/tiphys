@@ -69,8 +69,10 @@ spec:
           {{- if $app.service.command }}
           command: ["bash", "-c", {{ $app.service.command | join " " | quote}}]
           {{- end }}
-          {{- if $app.secrets }}
           envFrom:
+            - secretRef:
+                name: {{ template "opszero.fullname" $ }}
+          {{- if $app.secrets }}
             - secretRef:
                 name: {{ template "opszero.fullname" $ }}-{{ $app.name }}
           {{- end }}
