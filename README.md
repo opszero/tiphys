@@ -22,6 +22,10 @@ redis:
 
 apps:
   - name: payroll
+    secrets:
+      all:
+        username: "admin"
+        password: "admin"
     service:
       enabled: true
       type: ClusterIP

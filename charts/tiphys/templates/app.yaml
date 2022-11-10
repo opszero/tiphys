@@ -69,9 +69,11 @@ spec:
           {{- if $app.service.command }}
           command: ["bash", "-c", {{ $app.service.command | join " " | quote}}]
           {{- end }}
+          {{- if $app.secrets }}
           envFrom:
             - secretRef:
-                name: {{ template "opszero.fullname" $ }}
+                name: {{ template "opszero.fullname" $ }}-{{ $app.name }}
+          {{- end }}
           env:
           - name: app
             value: {{ $app.name }}
@@ -86,6 +88,22 @@ spec:
           {{- with $app.service.healthChecks }}
           {{ toYaml . | nindent 10 }}
           {{- end }}
+
+{{- if $app.secrets }}
+---
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: {{ template "opszero.fullname" $ }}-{{ $app.name }}
+  labels:
+    {{- include "opszero.labels" $ | nindent 4 }}
+stringData:
+{{- range $k, $v := $app.secrets.all }}
+  {{ $k }}: {{ $v | quote -}}
+{{- end }}
+{{- end }}
+
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
