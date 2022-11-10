@@ -99,7 +99,7 @@ metadata:
   labels:
     {{- include "opszero.labels" $ | nindent 4 }}
 stringData:
-{{- range $k, $v := $app.secrets.all }}
+{{- range $k, $v := $app.secrets }}
   {{ $k }}: {{ $v | quote -}}
 {{- end }}
 {{- end }}
