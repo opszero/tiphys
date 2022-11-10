@@ -23,9 +23,7 @@ redis:
 apps:
   - name: payroll
     secrets:
-      all:
-        username: "admin"
-        password: "admin"
+      USERNAME: opszero
     service:
       enabled: true
       type: ClusterIP
