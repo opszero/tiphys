@@ -51,19 +51,7 @@ affinity: {}
 
 secrets: {}
 
-celeryQueues:
-  - name: default
-    concurrency: 8
-    replicaCount: 2
-    resources: {}
-
 redis:
   enabled: false
   auth:
     enabled: false
-  master:
-    persistence:
-      enabled: false
-  replica:
-    persistence:
-      enabled: false

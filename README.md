@@ -58,6 +58,7 @@ apps:
       enabled: true
       type: ClusterIP
       port: 3000
+      command: ["bundle", "exec", "rails", "server"]
       hosts:
         - host: yieldpayroll.com
           paths: ["/"]
