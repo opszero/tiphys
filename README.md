@@ -17,8 +17,15 @@ helm upgrade --install yieldpay tiphys/tiphys -f ./charts/payroll.yaml --set ima
 # Default image for all the apps. If an image isn't specified this one is used.
 defaultImage: nginx:latest
 
+# Override with: https://artifacthub.io/packages/helm/bitnami/redis
 redis:
   enabled: true # Enable Redis
+  # master:
+  #  persistence:
+  #    size: 50Gi
+  # replica:
+  #  persistence:
+  #    size: 50Gi
 
 apps:
   - name: payroll
