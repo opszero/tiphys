@@ -93,7 +93,6 @@ apps:
           successThreshold: 1
           timeoutSeconds: 30
           httpGet:
-          httpGet:
             path: /healthcheck
             port: 3000
     jobs:
