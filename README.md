@@ -31,6 +31,8 @@ apps:
   - name: payroll
     secrets:
       USERNAME: opszero
+    autoscaling:
+      enabled: true
     service:
       enabled: true
       type: ClusterIP
