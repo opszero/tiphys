@@ -33,6 +33,10 @@ apps:
       USERNAME: opszero
     autoscaling:
       enabled: true
+      minReplicas: 2
+      maxReplicas: 4
+      targetCPUUtilizationPercentage: 75
+      targetMemoryUtilizationPercentage: 75
     service:
       enabled: true
       type: ClusterIP

@@ -121,18 +121,18 @@ spec:
   scaleTargetRef:
     name: {{ include "opszero.fullname" $ }}-{{ $app.name }}
     kind: Deployment
-  minReplicaCount: {{ $.Values.autoscaling.minReplicas }}
-  maxReplicaCount: {{ $.Values.autoscaling.maxReplicas }}
+  minReplicaCount: {{ default $.Values.autoscaling.minReplicas $app.autoscaling.minReplicas }}
+  maxReplicaCount: {{ default $.Values.autoscaling.maxReplicas $app.autoscaling.maxReplicas }}
   cooldownPeriod: 60
   triggers:
   - type: cpu
     metadata:
       type: Utilization
-      value: {{ $.Values.autoscaling.targetCPUUtilizationPercentage | quote }}
+      value: {{ default $.Values.autoscaling.CPUUtilizationPercentage $app.autoscaling.targetCPUUtilizationPercentage | quote }}
   - type: memory
     metadata:
       type: Utilization
-      value: {{ $.Values.autoscaling.targetMemoryUtilizationPercentage | quote }}
+      value: {{ default $.Values.autoscaling.targetMemoryUtilizationPercentage $app.autoscaling.targetMemoryUtilizationPercentage | quote }}
 {{- end }}
 ---
 apiVersion: networking.k8s.io/v1
