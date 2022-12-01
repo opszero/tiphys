@@ -128,3 +128,9 @@ secrets:
   KEY_NAME: "Value"
   KEY_NAME2: "Value"
 ```
+
+# Helm Template
+
+```
+helm template ./charts/tiphys -f ./stage.yaml
+```
