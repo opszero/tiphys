@@ -10,6 +10,27 @@ helm repo update
 helm upgrade --install yieldpay tiphys/tiphys -f ./charts/payroll.yaml --set image.repository=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 ```
 
+# Github Action To Create Helm chart using this repo
+
+```
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Release code in production
+      run: |
+        aws eks --region us-west-2 update-kubeconfig --name ops-prod
+        helm repo add tiphys https://opszero.github.io/tiphys
+        helm repo update
+        helm upgrade --install opsy \
+          tiphys/tiphys \
+          -n pump \
+          --create-namespace \
+          -f ./charts/prod.yml \
+          --set defaultImage=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG-api \
+          --set apps[0].image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG-js \
+```
+
 ./stage.yaml
 
 ```
@@ -112,4 +133,10 @@ apps:
 secrets:
   KEY_NAME: "Value"
   KEY_NAME2: "Value"
+```
+
+# Helm Template
+
+```
+helm template ./charts/tiphys -f ./stage.yaml
 ```
