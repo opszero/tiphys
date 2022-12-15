@@ -48,15 +48,21 @@ redis:
   #  persistence:
   #    size: 50Gi
 
+envRaw: # Additional environment variables added.
+  - name: DD_AGENT_HOST
+    valueFrom:
+      fieldRef:
+        fieldPath: status.hostIP
+
 apps:
   - name: sitemap
     service:
-        enabled: true
-        type: ExternalName
-        hosts:
-          - host: yieldpayroll.com
-            paths: ["/(sitemap-.*)"]
-        externalName: cname.example.com
+      enabled: true
+      type: ExternalName
+      hosts:
+        - host: yieldpayroll.com
+          paths: ["/(sitemap-.*)"]
+      externalName: cname.example.com
   - name: payroll
     secrets:
       USERNAME: opszero
@@ -80,6 +86,11 @@ apps:
         maxReplicas: 4
         targetCPUUtilizationPercentage: 75
         targetMemoryUtilizationPercentage: 75
+      envRaw:
+        - name: DD_AGENT_HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.hostIP
     jobs:
       - name: db-migrate
         command: "bundle exec rake db:migrate"

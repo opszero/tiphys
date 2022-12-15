@@ -45,12 +45,10 @@ autoscaling:
   targetMemoryUtilizationPercentage: 99
 
 nodeSelector: {}
-
 tolerations: []
-
 affinity: {}
-
 secrets: {}
+envRaw: {}
 
 redis:
   enabled: false

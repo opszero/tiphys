@@ -25,6 +25,15 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ template "opszero.fullname" $ }}
+          env:
+          - name: TIPHYS_APP
+            value: {{ $app.name }}
+          {{- if $.Values.envRaw }}
+            {{- toYaml $.Values.envRaw | nindent 10 }}
+          {{- end }}
+          {{- if $app.service.envRaw }}
+            {{- toYaml $app.service.envRaw | nindent 10 }}
+          {{- end }}
 {{- end }}
 
 {{- if $app.service.enabled }}
@@ -86,8 +95,14 @@ spec:
                 name: {{ template "opszero.fullname" $ }}-{{ $app.name }}
           {{- end }}
           env:
-          - name: app
+          - name: TIPHYS_APP
             value: {{ $app.name }}
+          {{- if $.Values.envRaw }}
+            {{- toYaml $.Values.envRaw | nindent 10 }}
+          {{- end }}
+          {{- if $app.service.envRaw }}
+            {{- toYaml $app.service.envRaw | nindent 10 }}
+          {{- end }}
           ports:
             - name: http
               containerPort: {{ $app.service.port }}
@@ -210,6 +225,15 @@ spec:
               envFrom:
                 - secretRef:
                     name: {{ template "opszero.fullname" $ }}
+              env:
+              - name: TIPHYS_APP
+                value: {{ $app.name }}
+              {{- if $.Values.envRaw }}
+                {{- toYaml $.Values.envRaw | nindent 14 }}
+              {{- end }}
+              {{- if $app.service.envRaw }}
+                {{- toYaml $app.service.envRaw | nindent 14 }}
+              {{- end }}
               {{- if $cronjob.resources }}
               resources:
                 {{- toYaml $cronjob.resources | nindent 16 }}
