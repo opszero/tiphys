@@ -37,14 +37,14 @@ metadata:
     {{- include "opszero.selectorLabels" $ | nindent 4 }}-{{ $app.name }}
 spec:
   type: {{ $app.service.type }}
+  selector:
+    {{- include "opszero.selectorLabels" $ | nindent 4 }}-{{ $app.name }}
   {{- if ne $app.service.type "ExternalName" }}
   ports:
     - port: {{ $app.service.port }}
       targetPort: http
       protocol: TCP
       name: http
-  selector:
-    {{- include "opszero.selectorLabels" $ | nindent 4 }}-{{ $app.name }}
   {{- else }}
   externalName: {{ $app.service.externalName }}
   {{- end }}
