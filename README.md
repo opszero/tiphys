@@ -52,12 +52,7 @@ apps:
   - name: payroll
     secrets:
       USERNAME: opszero
-    autoscaling:
-      enabled: true
-      minReplicas: 2
-      maxReplicas: 4
-      targetCPUUtilizationPercentage: 75
-      targetMemoryUtilizationPercentage: 75
+
     service:
       enabled: true
       type: ClusterIP
@@ -72,6 +67,12 @@ apps:
         limits:
           memory: "128Mi"
           cpu: "500m"
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+        maxReplicas: 4
+        targetCPUUtilizationPercentage: 75
+        targetMemoryUtilizationPercentage: 75
     jobs:
       - name: db-migrate
         command: "bundle exec rake db:migrate"
@@ -122,6 +123,8 @@ apps:
           httpGet:
             path: /healthcheck
             port: 3000
+      autoscaling:
+        enabled: false
     jobs:
       - name: db-migrate
         command: "bundle exec rake db:migrate"

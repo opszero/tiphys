@@ -52,7 +52,7 @@ metadata:
   labels:
     {{- include "opszero.selectorLabels" $ | nindent 4 }}-{{ $app.name }}
 spec:
-  {{- if not $app.autoscaling.enabled }}
+  {{- if not $app.service.autoscaling.enabled }}
   replicas: {{ $.Values.replicaCount }}
   {{- end }}
   selector:
@@ -109,7 +109,7 @@ stringData:
 {{- end }}
 {{- end }}
 
-{{- if $app.autoscaling.enabled }}
+{{- if $app.service.autoscaling.enabled }}
 ---
 apiVersion: keda.sh/v1alpha1
 kind: ScaledObject
@@ -121,18 +121,18 @@ spec:
   scaleTargetRef:
     name: {{ include "opszero.fullname" $ }}-{{ $app.name }}
     kind: Deployment
-  minReplicaCount: {{ default $.Values.autoscaling.minReplicas $app.autoscaling.minReplicas }}
-  maxReplicaCount: {{ default $.Values.autoscaling.maxReplicas $app.autoscaling.maxReplicas }}
+  minReplicaCount: {{ default $.Values.autoscaling.minReplicas $app.service.autoscaling.minReplicas }}
+  maxReplicaCount: {{ default $.Values.autoscaling.maxReplicas $app.service.autoscaling.maxReplicas }}
   cooldownPeriod: 60
   triggers:
   - type: cpu
     metadata:
       type: Utilization
-      value: {{ default $.Values.autoscaling.CPUUtilizationPercentage $app.autoscaling.targetCPUUtilizationPercentage | quote }}
+      value: {{ default $.Values.autoscaling.CPUUtilizationPercentage $app.service.autoscaling.targetCPUUtilizationPercentage | quote }}
   - type: memory
     metadata:
       type: Utilization
-      value: {{ default $.Values.autoscaling.targetMemoryUtilizationPercentage $app.autoscaling.targetMemoryUtilizationPercentage | quote }}
+      value: {{ default $.Values.autoscaling.targetMemoryUtilizationPercentage $app.service.autoscaling.targetMemoryUtilizationPercentage | quote }}
 {{- end }}
 ---
 apiVersion: networking.k8s.io/v1
