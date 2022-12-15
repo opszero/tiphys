@@ -37,6 +37,7 @@ metadata:
     {{- include "opszero.selectorLabels" $ | nindent 4 }}-{{ $app.name }}
 spec:
   type: {{ $app.service.type }}
+  {{- if ne $app.service.type "ExternalName" }}
   ports:
     - port: {{ $app.service.port }}
       targetPort: http
@@ -44,6 +45,11 @@ spec:
       name: http
   selector:
     {{- include "opszero.selectorLabels" $ | nindent 4 }}-{{ $app.name }}
+  {{- else }}
+  externalName: {{ $app.service.externalName }}
+  {{- end }}
+
+{{- if ne $app.service.type "ExternalName" }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -93,6 +99,7 @@ spec:
           {{- with $app.service.healthChecks }}
           {{ toYaml . | nindent 10 }}
           {{- end }}
+{{- end }}
 
 {{- if $app.secrets }}
 ---
@@ -164,8 +171,10 @@ spec:
             backend:
               service:
                 name: {{ include "opszero.fullname" $ }}-{{ $app.name }}
+                {{- if ne $app.service.type "ExternalName" }}
                 port:
                   number: {{ $app.service.port }}
+                {{- end }}
           {{- end }}
     {{- end }}
   tls:
