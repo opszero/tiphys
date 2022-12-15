@@ -49,10 +49,17 @@ redis:
   #    size: 50Gi
 
 apps:
+  - name: sitemap
+    service:
+        enabled: true
+        type: ExternalName
+        hosts:
+          - host: yieldpayroll.com
+            paths: ["/(sitemap-.*)"]
+        externalName: cname.example.com
   - name: payroll
     secrets:
       USERNAME: opszero
-
     service:
       enabled: true
       type: ClusterIP
