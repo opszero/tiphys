@@ -85,6 +85,8 @@ apps:
         limits:
           memory: "128Mi"
           cpu: "500m"
+      ingressAnnotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /$1
       autoscaling:
         enabled: true
         minReplicas: 2
