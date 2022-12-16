@@ -74,7 +74,10 @@ apps:
     service:
       enabled: true
       type: ClusterIP
-      port: 3000
+      ports:
+        - name: http
+          port: 3000
+          protocol: TCP
       hosts:
         - host: yieldpayroll.com
           paths: ["/"]
@@ -117,7 +120,10 @@ apps:
     service:
       enabled: true
       type: ClusterIP
-      port: 3000
+      ports:
+        - name: http
+          port: 3000
+          protocol: TCP
       command: ["bundle", "exec", "rails", "server"]
       hosts:
         - host: yieldpayroll.com

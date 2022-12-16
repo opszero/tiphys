@@ -52,11 +52,10 @@ spec:
   selector:
     {{- include "opszero.selectorLabels" $ | nindent 4 }}-{{ $app.name }}
   {{- if ne $app.service.type "ExternalName" }}
+  {{- with $app.service.ports }}
   ports:
-    - port: {{ $app.service.port }}
-      targetPort: http
-      protocol: TCP
-      name: http
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- else }}
   externalName: {{ $app.service.externalName }}
   {{- end }}
@@ -120,11 +119,13 @@ spec:
             {{- if $app.service.envRaw }}
               {{- toYaml $app.service.envRaw | nindent 12 }}
             {{- end }}
-          {{- with $app.service.port }}
+          {{- with $app.service.ports }}
           ports:
-            - name: http
-              containerPort: {{ $app.service.port }}
-              protocol: TCP
+          {{- range $port := . }}
+            - name: {{ $port.name }}
+              containerPort: {{ $port.port }}
+              protocol: {{ $port.protocol }}
+          {{- end }}
           {{- end }}
           {{- if $app.service.resources }}
           resources:
