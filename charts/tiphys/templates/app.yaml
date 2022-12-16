@@ -1,4 +1,5 @@
 {{- range $app := .Values.apps }}
+{{- with $app.jobs -}}
 {{- range $job := $app.jobs }}
 ---
 apiVersion: batch/v1
@@ -34,6 +35,7 @@ spec:
             {{- if $app.service.envRaw }}
               {{- toYaml $app.service.envRaw | nindent 12 }}
             {{- end }}
+{{- end }}
 {{- end }}
 
 {{- if $app.service.enabled }}
