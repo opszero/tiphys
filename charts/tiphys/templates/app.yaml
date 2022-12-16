@@ -170,7 +170,7 @@ spec:
   - type: cpu
     metadata:
       type: Utilization
-      value: {{ default $.Values.autoscaling.CPUUtilizationPercentage $app.service.autoscaling.targetCPUUtilizationPercentage | quote }}
+      value: {{ default $.Values.autoscaling.targetCPUUtilizationPercentage $app.service.autoscaling.targetCPUUtilizationPercentage | quote }}
   - type: memory
     metadata:
       type: Utilization
