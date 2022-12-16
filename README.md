@@ -59,9 +59,9 @@ envRaw: # Additional environment variables added.
       fieldRef:
         fieldPath: status.hostIP
 
+# Creates Services of the type ExternalName
 externals:
   - name: sitemap
-    type: ExternalName
     cname: "some-sitemap.s3.amazon.com"
     ingress:
       hosts:
@@ -69,7 +69,6 @@ externals:
           paths: ["/(sitemap-.*)"]
           port: 8000
   - name: elasticache
-    type: ExternalName
     cname: "elasticache.redis.amazon.com"
 
 apps:
