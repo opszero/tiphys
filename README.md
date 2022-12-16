@@ -59,6 +59,19 @@ envRaw: # Additional environment variables added.
       fieldRef:
         fieldPath: status.hostIP
 
+externals:
+  - name: sitemap
+    type: ExternalName
+    cname: "some-sitemap.s3.amazon.com"
+    ingress:
+      hosts:
+        - host: somesitemap.shopcanal.com
+          paths: ["/"]
+          port: 8000
+  - name: elasticache
+    type: ExternalName
+    cname: "elasticache.redis.amazon.com"
+
 apps:
   - name: sitemap
     service:
@@ -78,9 +91,16 @@ apps:
         - name: http
           port: 3000
           protocol: TCP
-      hosts:
-        - host: yieldpayroll.com
-          paths: ["/"]
+        - name: com
+          port: 4000
+          protocol: TCP
+      ingress:
+        annotations:
+          nginx.ingress.kubernetes.io/rewrite-target: /$1
+        hosts:
+          - host: yieldpayroll.com
+            paths: ["/"]
+            port: 3000
       resources:
         requests:
           memory: "64Mi"
@@ -88,8 +108,6 @@ apps:
         limits:
           memory: "128Mi"
           cpu: "500m"
-      ingressAnnotations:
-        nginx.ingress.kubernetes.io/rewrite-target: /$1
       autoscaling:
         enabled: true
         minReplicas: 2
@@ -125,9 +143,11 @@ apps:
           port: 3000
           protocol: TCP
       command: ["bundle", "exec", "rails", "server"]
-      hosts:
-        - host: yieldpayroll.com
-          paths: ["/"]
+      ingress:
+        hosts:
+          - host: yieldpayroll.com
+            paths: ["/"]
+            port: 3000
       healthChecks:
         lifecycle:
           preStop:

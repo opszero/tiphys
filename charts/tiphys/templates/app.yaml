@@ -46,7 +46,7 @@ kind: Service
 metadata:
   name: {{ include "opszero.fullname" $ }}-{{ $app.name }}
   labels:
-    {{- include "opszero.selectorLabels" $ | nindent 4 }}-{{ $app.name }}
+    {{- include "opszero.labels" $ | nindent 4 }}-{{ $app.name }}
 spec:
   type: {{ $app.service.type }}
   selector:
@@ -61,7 +61,6 @@ spec:
   {{- end }}
 {{- end }}
 
-{{- if ne $app.service.type "ExternalName" }}
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -134,7 +133,6 @@ spec:
           {{- with $app.service.healthChecks }}
           {{ toYaml . | nindent 10 }}
           {{- end }}
-{{- end }}
 
 {{- if $app.secrets }}
 ---
@@ -182,7 +180,7 @@ spec:
 {{- end }}
 {{- end }}
 
-{{- with $app.service.hosts }}
+{{- if and $app.service.ingress $app.service.ingress.hosts}}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -200,13 +198,17 @@ metadata:
   {{- with $.Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- with $app.service.ingressAnnotations }}
+  {{ if $app.service.ingress }}
+  {{- with $app.service.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- end }}
 spec:
   ingressClassName: nginx
   rules:
-    {{- range $app.service.hosts }}
+    {{- with $app.service.ingress }}
+    {{- with $app.service.ingress.hosts }}
+    {{- range $host := . }}
     - host: {{ .host | quote }}
       http:
         paths:
@@ -216,15 +218,15 @@ spec:
             backend:
               service:
                 name: {{ include "opszero.fullname" $ }}-{{ $app.name }}
-                {{- if ne $app.service.type "ExternalName" }}
                 port:
-                  number: {{ $app.service.port }}
-                {{- end }}
+                  number: {{ $host.port }}
           {{- end }}
+    {{- end }}
+    {{- end }}
     {{- end }}
   tls:
     - hosts:
-    {{- range $app.service.hosts }}
+    {{- range $app.service.ingress.hosts }}
         - {{ .host }}
     {{- end }}
       secretName: {{ include "opszero.fullname" $ }}-{{ $app.name }}-tls

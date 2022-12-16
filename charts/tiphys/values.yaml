@@ -58,3 +58,6 @@ redis:
   enabled: false
   auth:
     enabled: false
+
+apps: {}
+externals: {}
