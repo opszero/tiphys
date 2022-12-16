@@ -26,14 +26,14 @@ spec:
             - secretRef:
                 name: {{ template "opszero.fullname" $ }}
           env:
-          - name: TIPHYS_APP
-            value: {{ $app.name }}
-          {{- if $.Values.envRaw }}
-            {{- toYaml $.Values.envRaw | nindent 10 }}
-          {{- end }}
-          {{- if $app.service.envRaw }}
-            {{- toYaml $app.service.envRaw | nindent 10 }}
-          {{- end }}
+            - name: TIPHYS_APP
+              value: {{ $app.name }}
+            {{- if $.Values.envRaw }}
+              {{- toYaml $.Values.envRaw | nindent 12 }}
+            {{- end }}
+            {{- if $app.service.envRaw }}
+              {{- toYaml $app.service.envRaw | nindent 12 }}
+            {{- end }}
 {{- end }}
 
 {{- if $app.service.enabled }}
@@ -108,14 +108,14 @@ spec:
                 name: {{ template "opszero.fullname" $ }}-{{ $app.name }}
           {{- end }}
           env:
-          - name: TIPHYS_APP
-            value: {{ $app.name }}
-          {{- if $.Values.envRaw }}
-            {{- toYaml $.Values.envRaw | nindent 10 }}
-          {{- end }}
-          {{- if $app.service.envRaw }}
-            {{- toYaml $app.service.envRaw | nindent 10 }}
-          {{- end }}
+            - name: TIPHYS_APP
+              value: {{ $app.name }}
+            {{- if $.Values.envRaw }}
+              {{- toYaml $.Values.envRaw | nindent 12 }}
+            {{- end }}
+            {{- if $app.service.envRaw }}
+              {{- toYaml $app.service.envRaw | nindent 12 }}
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ $app.service.port }}
@@ -239,14 +239,14 @@ spec:
                 - secretRef:
                     name: {{ template "opszero.fullname" $ }}
               env:
-              - name: TIPHYS_APP
-                value: {{ $app.name }}
-              {{- if $.Values.envRaw }}
-                {{- toYaml $.Values.envRaw | nindent 14 }}
-              {{- end }}
-              {{- if $app.service.envRaw }}
-                {{- toYaml $app.service.envRaw | nindent 14 }}
-              {{- end }}
+                - name: TIPHYS_APP
+                  value: {{ $app.name }}
+                {{- if $.Values.envRaw }}
+                  {{- toYaml $.Values.envRaw | nindent 16 }}
+                {{- end }}
+                {{- if $app.service.envRaw }}
+                  {{- toYaml $app.service.envRaw | nindent 16 }}
+                {{- end }}
               {{- if $cronjob.resources }}
               resources:
                 {{- toYaml $cronjob.resources | nindent 16 }}
