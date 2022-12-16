@@ -180,6 +180,9 @@ apps:
 secrets:
   KEY_NAME: "Value"
   KEY_NAME2: "Value"
+
+secrets64:
+  KEY_NAME3: "dmFsdWUK" # echo "dmFsdWUK" | base64 -d
 ```
 
 # Helm Template
