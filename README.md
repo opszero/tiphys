@@ -66,21 +66,13 @@ externals:
     ingress:
       hosts:
         - host: somesitemap.shopcanal.com
-          paths: ["/"]
+          paths: ["/(sitemap-.*)"]
           port: 8000
   - name: elasticache
     type: ExternalName
     cname: "elasticache.redis.amazon.com"
 
 apps:
-  - name: sitemap
-    service:
-      enabled: true
-      type: ExternalName
-      hosts:
-        - host: yieldpayroll.com
-          paths: ["/(sitemap-.*)"]
-      externalName: cname.example.com
   - name: payroll
     secrets:
       USERNAME: opszero
