@@ -52,6 +52,7 @@ envRaw: {}
 
 datadog:
   enabled: false
+  version: ""
 
 redis:
   enabled: false

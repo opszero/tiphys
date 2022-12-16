@@ -51,6 +51,7 @@ redis:
 datadog:
   enabled: true # Enable Datadog
   envName: develop
+  version: "1.1"
 
 envRaw: # Additional environment variables added.
   - name: DD_AGENT_HOST

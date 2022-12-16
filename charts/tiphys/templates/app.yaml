@@ -1,5 +1,5 @@
 {{- range $app := .Values.apps }}
-{{- with $app.jobs -}}
+{{- with $app.jobs }}
 {{- range $job := $app.jobs }}
 ---
 apiVersion: batch/v1
@@ -71,7 +71,7 @@ metadata:
     {{- if $.Values.datadog.enabled }}
     tags.datadoghq.com/env: {{ $.Values.datadog.envName | quote }}
     tags.datadoghq.com/service: {{ include "opszero.fullname" $ }}-{{ $app.name }}
-    tags.datadoghq.com/version: {{ default $.Values.defaultImage $app.image | quote }}
+    tags.datadoghq.com/version: {{ $.Values.datadog.version | quote }}
     {{- end }}
 spec:
   {{- if not $app.service.autoscaling.enabled }}
@@ -92,7 +92,7 @@ spec:
       {{- if $.Values.datadog.enabled }}
         tags.datadoghq.com/env: {{ $.Values.datadog.envName | quote }}
         tags.datadoghq.com/service: {{ include "opszero.fullname" $ }}-{{ $app.name }}
-        tags.datadoghq.com/version: {{ default $.Values.defaultImage $app.image | quote }}
+        tags.datadoghq.com/version: {{ $.Values.datadog.version | quote }}
       {{- end }}
     spec:
       containers:
