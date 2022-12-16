@@ -143,6 +143,8 @@ apps:
             port: 3000
       autoscaling:
         enabled: false
+      podAnnotations:
+        ad.datadoghq.com/celery.logs: '[{"source": "celery","service": "celery"}]'
     jobs:
       - name: db-migrate
         command: "bundle exec rake db:migrate"

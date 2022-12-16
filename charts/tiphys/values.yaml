@@ -50,6 +50,9 @@ affinity: {}
 secrets: {}
 envRaw: {}
 
+datadog:
+  enabled: false
+
 redis:
   enabled: false
   auth:
