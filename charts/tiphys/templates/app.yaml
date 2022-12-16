@@ -150,6 +150,7 @@ stringData:
 {{- end }}
 {{- end }}
 
+{{- with $app.service.autoscaling }}
 {{- if $app.service.autoscaling.enabled }}
 ---
 apiVersion: keda.sh/v1alpha1
@@ -174,7 +175,12 @@ spec:
     metadata:
       type: Utilization
       value: {{ default $.Values.autoscaling.targetMemoryUtilizationPercentage $app.service.autoscaling.targetMemoryUtilizationPercentage | quote }}
+  {{- with $app.service.autoscaling.kedaTriggers }}
+  {{- toYaml . | nindent 2 }}
+  {{- end }}
 {{- end }}
+{{- end }}
+
 {{- with $app.service.hosts }}
 ---
 apiVersion: networking.k8s.io/v1
