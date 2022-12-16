@@ -47,6 +47,8 @@ spec:
             backend:
               service:
                 name: {{ include "opszero.fullname" $ }}-{{ $app.name }}
+              port:
+                number: {{ $host.port }}
           {{- end }}
     {{- end }}
     {{- end }}
