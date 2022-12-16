@@ -48,6 +48,10 @@ redis:
   #  persistence:
   #    size: 50Gi
 
+datadog:
+  enabled: true # Enable Datadog
+  envName: develop
+
 envRaw: # Additional environment variables added.
   - name: DD_AGENT_HOST
     valueFrom:
