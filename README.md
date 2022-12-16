@@ -1,6 +1,6 @@
 # tiphys
 
-Standardized App Deployments for Node, Ruby on Rails, and Django apps
+Helm Chart Abstraction for 80% of Apps. Standardized for NodeJS, Ruby on Rails, and Django
 
 # Usage
 
