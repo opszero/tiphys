@@ -39,6 +39,7 @@ spec:
 {{- end }}
 
 {{- if $app.service.enabled }}
+{{- with $app.service.type }}
 ---
 apiVersion: v1
 kind: Service
@@ -59,6 +60,7 @@ spec:
   {{- else }}
   externalName: {{ $app.service.externalName }}
   {{- end }}
+{{- end }}
 
 {{- if ne $app.service.type "ExternalName" }}
 ---
@@ -118,10 +120,12 @@ spec:
             {{- if $app.service.envRaw }}
               {{- toYaml $app.service.envRaw | nindent 12 }}
             {{- end }}
+          {{- with $app.service.port }}
           ports:
             - name: http
               containerPort: {{ $app.service.port }}
               protocol: TCP
+          {{- end }}
           {{- if $app.service.resources }}
           resources:
             {{- toYaml $app.service.resources | nindent 12 }}
