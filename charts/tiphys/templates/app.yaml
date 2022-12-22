@@ -80,6 +80,10 @@ spec:
   selector:
     matchLabels:
       {{- include "opszero.selectorLabels" $ | nindent 6 }}-{{ $app.name }}
+  {{- with $app.service.strategy }}
+  strategy:
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
   template:
     metadata:
       annotations:

@@ -78,6 +78,8 @@ apps:
     service:
       enabled: true
       type: ClusterIP
+      strategy: # Deployment Strategy
+        type: Recreate
       ports:
         - name: http
           port: 3000
