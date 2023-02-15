@@ -7,8 +7,12 @@ kind: Job
 metadata:
   name: {{ include "opszero.fullname" $ }}-{{ $job.name }}
   annotations:
+    {{- if $job.annotations }}
+    {{- toYaml $job.annotations | nindent 4 }}
+    {{- else }}
     "helm.sh/hook": post-install,post-upgrade
     "helm.sh/hook-delete-policy": before-hook-creation
+    {{- end }}
   labels:
     {{- include "opszero.labels" $ | nindent 4 }}
 spec:

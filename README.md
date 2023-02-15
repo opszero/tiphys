@@ -115,6 +115,9 @@ apps:
     jobs:
       - name: db-migrate
         command: "bundle exec rake db:migrate"
+        annotations: # https://helm.sh/docs/topics/charts_hooks/
+          "helm.sh/hook": pre-install,pre-upgrade
+          "helm.sh/hook-delete-policy": before-hook-creation
     cronjobs:
       - name: hn
         command: ["bundle", "exec", "rails", "pay_people"]
@@ -192,3 +195,5 @@ secrets64:
 ```
 helm template ./charts/tiphys -f ./stage.yaml
 ```
+
+## Upgrades

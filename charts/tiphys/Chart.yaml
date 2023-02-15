@@ -2,7 +2,7 @@ apiVersion: v2
 name: tiphys
 description: A High Level Helm Chart
 type: application
-version: 0.9.4
+version: 0.9.5
 appVersion: 1.16.0
 
 dependencies:
