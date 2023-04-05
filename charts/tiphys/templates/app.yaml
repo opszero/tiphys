@@ -39,6 +39,10 @@ spec:
             {{- if $app.service.envRaw }}
               {{- toYaml $app.service.envRaw | nindent 12 }}
             {{- end }}
+          {{- if $job.resources }}
+          resources:
+            {{- toYaml $job.resources | nindent 12 }}
+          {{- end }}
 {{- end }}
 {{- end }}
 
