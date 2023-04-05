@@ -118,6 +118,13 @@ apps:
         annotations: # https://helm.sh/docs/topics/charts_hooks/
           "helm.sh/hook": pre-install,pre-upgrade
           "helm.sh/hook-delete-policy": before-hook-creation
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "250m"
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
     cronjobs:
       - name: hn
         command: ["bundle", "exec", "rails", "pay_people"]
