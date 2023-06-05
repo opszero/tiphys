@@ -255,7 +255,7 @@ metadata:
     {{- include "opszero.labels" $ | nindent 4 }}
 spec:
   schedule: {{ $cronjob.schedule | quote }}
-  successfulJobsHistoryLimit: 0
+  successfulJobsHistoryLimit: 1
   concurrencyPolicy: Replace
   jobTemplate:
     spec:
