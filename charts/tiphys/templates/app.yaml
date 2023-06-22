@@ -25,7 +25,7 @@ spec:
       containers:
         - name: {{ include "opszero.fullname" $ }}
           image: {{ default $.Values.defaultImage $app.image | quote }}
-          imagePullPolicy: Always
+          imagePullPolicy: {{ default "Always" $app.imagePullPolicy | quote }}
           command: ["bash", "-c", {{ $job.command | join " " | quote}}]
           envFrom:
             - secretRef:
@@ -110,7 +110,7 @@ spec:
       containers:
         - name: {{ $.Chart.Name }}
           image: {{ default $.Values.defaultImage $app.image | quote }}
-          imagePullPolicy: Always
+          imagePullPolicy: {{ default "Always" $job.imagePullPolicy | quote }}
           {{- if $app.service.command }}
           command: ["bash", "-c", {{ $app.service.command | join " " | quote}}]
           {{- end }}
