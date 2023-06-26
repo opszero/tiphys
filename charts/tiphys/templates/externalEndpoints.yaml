@@ -1,0 +1,30 @@
+{{- range $ep := .Values.externalEndpoints }}
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{{{ include "opszero.fullname" $ }}-{{ $app.name }}-external-EP
+  labels:
+      {{ - include "opszero.labels" $ | nindent 4 }}-{{ $app.name }}
+spec:
+  ports:
+    {{- range $p := $ep.ports }}
+    - protocol: {{ $p.protocol }}
+      port: {{ $p.port }}
+      targetPort: {{ $p.port }}
+    {{ end }}
+
+---
+
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: {{{{ include "opszero.fullname" $ }}-{{ $app.name }}-external-EP
+subsets:
+  - addresses:
+      {{- toYaml $ep.addresses | nindent 6 }}
+    ports:
+      {{- range $p := $ep.ports }}
+      - port: {{ $p.port }}
+      {{ end }}
+---
+{{ end }}
