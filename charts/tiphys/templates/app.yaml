@@ -67,7 +67,11 @@ spec:
   {{- else }}
   externalName: {{ $app.service.externalName }}
   {{- end }}
-{{- end }}
+  {{ - if $app.service.sessionAffinity }}
+  sessionAffinity: {{ $app.service.sessionAffinity | default "None" }}
+  {{ - end }}
+
+  {{- end }}
 
 ---
 apiVersion: apps/v1
