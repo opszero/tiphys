@@ -71,6 +71,14 @@ externals:
   - name: elasticache
     cname: "elasticache.redis.amazon.com"
 
+externalEndpoints:
+  - name: redis
+    addresses:
+      - ip: 0.0.0.0
+    ports:
+      - port: 6379
+        protocol: TCP
+
 apps:
   - name: payroll
     secrets:
