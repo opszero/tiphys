@@ -25,7 +25,7 @@ spec:
       containers:
         - name: {{ include "opszero.fullname" $ }}
           image: {{ default $.Values.defaultImage $app.image | quote }}
-          imagePullPolicy: {{ default "Always" job.imagePullPolicy | quote }}
+          imagePullPolicy: {{ default "Always" $app.imagePullPolicy | quote }}
           command: ["bash", "-c", {{ $job.command | join " " | quote}}]
           envFrom:
             - secretRef:
@@ -67,9 +67,9 @@ spec:
   {{- else }}
   externalName: {{ $app.service.externalName }}
   {{- end }}
-  {{ - if $app.service.sessionAffinity }}
+  {{- if $app.service.sessionAffinity }}
   sessionAffinity: {{ $app.service.sessionAffinity | default "None" }}
-  {{ - end }}
+  {{- end }}
 
   {{- end }}
 

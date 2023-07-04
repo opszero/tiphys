@@ -2,9 +2,9 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: {{ include "opszero.fullname" $ }}-{{ $app.name }}-external
+  name: {{ include "opszero.fullname" $ }}-{{ $ep.name }}-external
   labels:
-      {{ - include "opszero.labels" $ | nindent 4 }}-{{ $app.name }}
+      {{- include "opszero.labels" $ | nindent 4 }}-{{ $ep.name }}
 spec:
   ports:
     {{- range $p := $ep.ports }}
@@ -18,13 +18,13 @@ spec:
 kind: Endpoints
 apiVersion: v1
 metadata:
-  name: {{ include "opszero.fullname" $ }}-{{ $app.name }}}}-external
+  name: {{ include "opszero.fullname" $ }}-{{ $ep.name }}}}-external
 subsets:
   - addresses:
       {{- toYaml $ep.addresses | nindent 6 }}
     ports:
       {{- range $p := $ep.ports }}
       - port: {{ $p.port }}
-      {{ end }}
+      {{- end }}
 ---
 {{ end }}
