@@ -81,7 +81,7 @@ externalEndpoints:
 
 apps:
   - name: payroll
-    secrets:
+    secrets: # Accessible via /app-secrets/USERNAME
       USERNAME: opszero
     service:
       enabled: true
@@ -197,11 +197,11 @@ apps:
         command: ["bundle", "exec", "rails", "pay_people"]
         schedule: "0 * * * *"
 
-secrets:
+secrets: # Accessible via /secrets/KEY_NAME
   KEY_NAME: "Value"
   KEY_NAME2: "Value"
 
-secrets64:
+secrets64: # Accessible via /secrets/KEY_NAME3
   KEY_NAME3: "dmFsdWUK" # echo "dmFsdWUK" | base64 -d
 ```
 

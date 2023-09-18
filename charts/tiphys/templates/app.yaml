@@ -149,6 +149,30 @@ spec:
           {{- with $app.service.healthChecks }}
           {{ toYaml . | nindent 10 }}
           {{- end }}
+          volumeMounts:
+            - name: secrets
+              mountPath: "/secrets"
+              readOnly: true
+            {{- if $app.secrets }}
+            - name: appSecrets
+              mountPath: "/app-secrets"
+              readOnly: true
+            {{- end }}
+        {{- with $app.service.volumeMounts }}
+           {{- toYaml . | nindent 12 }}
+        {{- end }}
+      volumes:
+        - name: secrets
+          secret:
+            secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
+        {{- if $app.secrets }}
+        - name: appSecrets
+          secret:
+            secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
+        {{- end }}
+        {{- with $app.service.volumes }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
 
 {{- if $app.secrets }}
 ---
