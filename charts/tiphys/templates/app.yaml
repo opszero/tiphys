@@ -164,7 +164,7 @@ spec:
       volumes:
         - name: secrets
           secret:
-            secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
+            secretName: {{ template "opszero.fullname" $ }}
         {{- if $app.secrets }}
         - name: appSecrets
           secret:
