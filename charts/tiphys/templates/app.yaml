@@ -153,7 +153,7 @@ spec:
             - name: secrets
               mountPath: "/secrets"
               readOnly: true
-            - name: secrets
+            - name: appSecrets
               mountPath: "/app-secrets"
               readOnly: true
         {{- with $app.service.volumeMounts }}
@@ -161,6 +161,9 @@ spec:
         {{- end }}
       volumes:
         - name: secrets
+          secret:
+            secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
+        - name: appSecrets
           secret:
             secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
        {{- with $app.service.volumes }}
