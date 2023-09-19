@@ -154,7 +154,7 @@ spec:
               mountPath: "/secrets"
               readOnly: true
             {{- if $app.secrets }}
-            - name: appSecrets
+            - name: appsecrets
               mountPath: "/app-secrets"
               readOnly: true
             {{- end }}
@@ -166,7 +166,7 @@ spec:
           secret:
             secretName: {{ template "opszero.fullname" $ }}
         {{- if $app.secrets }}
-        - name: appSecrets
+        - name: appsecrets
           secret:
             secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
         {{- end }}
