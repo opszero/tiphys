@@ -115,6 +115,14 @@ spec:
         - name: {{ $.Chart.Name }}
           image: {{ default $.Values.defaultImage $app.image | quote }}
           imagePullPolicy: {{ default "Always" $app.service.imagePullPolicy | quote }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsUser: 1001
+            runAsNonRoot: true
+            privileged: false
+          {{- with $app.service.securityContext }}
+            {{- toYaml . | nindent 12 }}
+            {{- end }}
           {{- if $app.service.command }}
           command: ["bash", "-c", {{ $app.service.command | join " " | quote}}]
           {{- end }}
