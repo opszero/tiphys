@@ -71,6 +71,12 @@ externals:
   - name: elasticache
     cname: "elasticache.redis.amazon.com"
 
+defaultSecurityContext:
+  allowPrivilegeEscalation: false
+  runAsUser: 1001
+  runAsNonRoot: true
+  privileged: false
+  
 externalEndpoints:
   - name: redis
     addresses:
