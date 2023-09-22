@@ -115,10 +115,8 @@ spec:
         - name: {{ $.Chart.Name }}
           image: {{ default $.Values.defaultImage $app.image | quote }}
           imagePullPolicy: {{ default "Always" $app.service.imagePullPolicy | quote }}
-          {{- if $.Values.defaultSecurityContext }}
           securityContext:
           {{- toYaml $.Values.defaultSecurityContext | nindent 12 }}
-          {{- end }}
           {{- if $app.service.command }}
           command: ["bash", "-c", {{ $app.service.command | join " " | quote}}]
           {{- end }}
