@@ -94,8 +94,6 @@ apps:
       type: ClusterIP
       strategy: # Deployment Strategy
         type: Recreate
-      securityContext:
-          enabled: true
       ports:
         - name: http
           port: 3000
