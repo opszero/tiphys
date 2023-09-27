@@ -76,6 +76,10 @@ defaultSecurityContext:
   runAsUser: 1001
   runAsNonRoot: true
   privileged: false
+  # capabilities:
+  #   drop:
+  #     - ALL
+  #   add: ["NET_ADMIN"]
 
 externalEndpoints:
   - name: redis
