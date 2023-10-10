@@ -111,6 +111,10 @@ spec:
         tags.datadoghq.com/version: {{ $.Values.datadog.version | quote }}
       {{- end }}
     spec:
+      automountServiceAccountToken: false
+      hostPID: false
+      hostIPC: false
+      hostNetwork: false
       containers:
         - name: {{ $.Chart.Name }}
           image: {{ default $.Values.defaultImage $app.image | quote }}
