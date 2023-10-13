@@ -47,20 +47,20 @@ spec:
             - name: secrets
               mountPath: "/secrets"
               readOnly: true
-          {{ - if $app.secrets }}
+          {{- if $app.secrets }}
             - name: appsecrets
               mountPath: "/app-secrets"
               readOnly: true
-          {{ - end }}
+          {{- end }}
       volumes:
         - name: secrets
           secret:
             secretName: {{ template "opszero.fullname" $ }}
-      {{ - if $app.secrets }}
+      {{- if $app.secrets }}
       - name: appsecrets
         secret:
           secretName: {{ template "opszero.fullname" $ }}
-      {{ - end }}
+      {{- end }}
 {{- end }}
 {{- end }}
 
@@ -342,19 +342,19 @@ spec:
                 - name: secrets
                   mountPath: "/secrets"
                   readOnly: true
-              {{ - if $app.secrets }}
+              {{- if $app.secrets }}
                 - name: appsecrets
                   mountPath: "/app-secrets"
                   readOnly: true
-              {{ - end }}
+              {{- end }}
             volumes:
               - name: secrets
                 secret:
                   secretName: {{ template "opszero.fullname" $ }}
-            {{ - if $app.secrets }}
+            {{- if $app.secrets }}
               - name: appsecrets
                 secret:
                   secretName: {{ template "opszero.fullname" $ }}
-            {{ - end }}
+            {{- end }}
 {{- end }}
 {{- end }}
