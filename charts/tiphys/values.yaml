@@ -17,11 +17,11 @@ podAnnotations: {}
 podSecurityContext: {}
   # fsGroup: 2000
 
-defaultSecurityContext:
-  allowPrivilegeEscalation: false
-  runAsUser: 1001
-  runAsNonRoot: true
-  privileged: false
+defaultSecurityContext: {}
+  # allowPrivilegeEscalation: false
+  # runAsUser: 1001
+  # runAsNonRoot: true
+  # privileged: false
 
 ingress:
   annotations: {}
