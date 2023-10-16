@@ -43,6 +43,22 @@ spec:
           resources:
             {{- toYaml $job.resources | nindent 12 }}
           {{- end }}
+          {{- if $app.secrets }}
+          volumeMounts:
+            - name: appsecrets
+              mountPath: "/app-secrets"
+          {{- end }}
+      volumes:
+        - name: secrets
+          secret:
+            secretName: {{ template "opszero.fullname" $ }}
+          readOnly: true
+        {{- if $app.secrets }}
+        - name: appsecrets
+          secret:
+            secretName: {{ template "opszero.fullname" $ }}
+          readOnly: true
+        {{- end }}
 {{- end }}
 {{- end }}
 
@@ -319,6 +335,22 @@ spec:
               {{- if $cronjob.resources }}
               resources:
                 {{- toYaml $cronjob.resources | nindent 16 }}
+              {{- end }}
+              {{- if $app.secrets }}
+              volumeMounts:
+                - name: appsecrets
+                  mountPath: "/app-secrets"
+              {{- end }}
+            volumes:
+              - name: secrets
+                secret:
+                  secretName: {{ template "opszero.fullname" $ }}
+                readOnly: true
+              {{- if $app.secrets }}
+              - name: appsecrets
+                secret:
+                  secretName: { { template "opszero.fullname" $ }}
+                readOnly: true
               {{- end }}
 {{- end }}
 {{- end }}
