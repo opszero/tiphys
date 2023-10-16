@@ -210,6 +210,8 @@ metadata:
   name: {{ template "opszero.fullname" $ }}-{{ $app.name }}
   labels:
     {{- include "opszero.labels" $ | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-install,pre-upgrade
 stringData:
 {{- range $k, $v := $app.secrets }}
   {{ $k }}: {{ $v | quote -}}
