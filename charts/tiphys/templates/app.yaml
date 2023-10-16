@@ -43,21 +43,23 @@ spec:
           resources:
             {{- toYaml $job.resources | nindent 12 }}
           {{- end }}
-          {{- if $app.secrets }}
           volumeMounts:
+            - name: secrets
+              mountPath: "/secrets"
+              readOnly: true
+            {{- if $app.secrets }}
             - name: appsecrets
               mountPath: "/app-secrets"
-          {{- end }}
+              readOnly: true
+            {{- end }}
       volumes:
         - name: secrets
           secret:
             secretName: {{ template "opszero.fullname" $ }}
-          readOnly: true
         {{- if $app.secrets }}
         - name: appsecrets
           secret:
-            secretName: {{ template "opszero.fullname" $ }}
-          readOnly: true
+            secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
         {{- end }}
 {{- end }}
 {{- end }}
@@ -336,21 +338,23 @@ spec:
               resources:
                 {{- toYaml $cronjob.resources | nindent 16 }}
               {{- end }}
-              {{- if $app.secrets }}
               volumeMounts:
+                - name: secrets
+                  mountPath: "/secrets"
+                  readOnly: true
+                {{- if $app.secrets }}
                 - name: appsecrets
                   mountPath: "/app-secrets"
-              {{- end }}
-            volumes:
-              - name: secrets
-                secret:
-                  secretName: {{ template "opszero.fullname" $ }}
-                readOnly: true
-              {{- if $app.secrets }}
-              - name: appsecrets
-                secret:
-                  secretName: { { template "opszero.fullname" $ }}
-                readOnly: true
-              {{- end }}
+                  readOnly: true
+                {{- end }}
+          volumes:
+            - name: secrets
+              secret:
+                secretName: {{ template "opszero.fullname" $ }}
+            {{- if $app.secrets }}
+            - name: appsecrets
+              secret:
+                secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
+            {{- end }}
 {{- end }}
 {{- end }}
