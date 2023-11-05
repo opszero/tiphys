@@ -37,7 +37,6 @@ app.kubernetes.io/managed-by: {{ .Release.Service }}
 Selector labels
 */}}
 {{- define "opszero.selectorLabels" -}}
-app.kubernetes.io/instance: {{ .Release.Name }}
 app.kubernetes.io/name: {{ include "opszero.name" . }}
 {{- end }}
 
