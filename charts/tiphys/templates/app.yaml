@@ -22,6 +22,10 @@ spec:
         name: {{ include "opszero.fullname" $ }}-{{ $job.name }}
     spec:
       restartPolicy: Never
+      {{- if $app.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml $app.imagePullSecrets | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ include "opszero.fullname" $ }}
           image: {{ default $.Values.defaultImage $app.image | quote }}
@@ -133,6 +137,10 @@ spec:
       hostPID: false
       hostIPC: false
       hostNetwork: false
+      {{- if $app.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml default $app.imagePullSecrets | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ $.Chart.Name }}
           image: {{ default $.Values.defaultImage $app.image | quote }}
@@ -323,6 +331,10 @@ spec:
             - name: app
               image: {{ default $.Values.defaultImage $app.image | quote }}
               imagePullPolicy: Always
+              {{- if $app.imagePullSecrets }}
+              imagePullSecrets:
+                {{- toYaml default $app.imagePullSecrets | nindent 16 }}
+              {{- end }}
               command: ["bash", "-c", {{ $cronjob.command | join " " | quote}}]
               envFrom:
                 - secretRef:
