@@ -92,7 +92,7 @@ externalEndpoints:
 apps:
   - name: payroll
     imagePullSecrets: # If there is secret needed for private docker registry
-     -name: docker-secret
+     - name: docker-secret
     secrets: # Accessible via /app-secrets/USERNAME
       USERNAME: opszero
     service:
