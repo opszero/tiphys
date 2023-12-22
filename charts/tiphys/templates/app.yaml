@@ -24,7 +24,7 @@ spec:
       restartPolicy: Never
       {{- if $app.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml $app.imagePullSecrets | nindent 8 }}
+      {{- toYaml $app.imagePullSecrets | nindent 8 }}
       {{- end }}
       containers:
         - name: {{ include "opszero.fullname" $ }}
@@ -139,7 +139,7 @@ spec:
       hostNetwork: false
       {{- if $app.imagePullSecrets }}
       imagePullSecrets:
-        {{- toYaml default $app.imagePullSecrets | nindent 8 }}
+      {{- toYaml $app.imagePullSecrets | nindent 8 }}
       {{- end }}
       containers:
         - name: {{ $.Chart.Name }}
@@ -333,7 +333,7 @@ spec:
               imagePullPolicy: Always
               {{- if $app.imagePullSecrets }}
               imagePullSecrets:
-                {{- toYaml default $app.imagePullSecrets | nindent 16 }}
+              {{- toYaml default $app.imagePullSecrets | nindent 16 }}
               {{- end }}
               command: ["bash", "-c", {{ $cronjob.command | join " " | quote}}]
               envFrom:
