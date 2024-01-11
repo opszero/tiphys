@@ -157,7 +157,7 @@ spec:
           lifecycle:
             postStart:
               exec:
-                command: ["bash", "-c", {{ $app.service.postStartCommand| join " " | quote}}]
+                command: ["bash", "-c", {{ $app.service.postStartCommand | join " " | quote}}]
           {{- end }}
           envFrom:
             - secretRef:
