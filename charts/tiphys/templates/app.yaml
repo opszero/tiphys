@@ -153,6 +153,12 @@ spec:
           {{- if $app.service.command }}
           command: ["bash", "-c", {{ $app.service.command | join " " | quote}}]
           {{- end }}
+          {{- if $app.service.postStartCommand }}
+          lifecycle:
+            postStart:
+              exec:
+                command: ["bash", "-c", {{ $app.service.postStartCommand | join " " | quote}}]
+          {{- end }}
           envFrom:
             - secretRef:
                 name: {{ template "opszero.fullname" $ }}
