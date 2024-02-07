@@ -367,6 +367,9 @@ spec:
                   mountPath: "/app-secrets"
                   readOnly: true
                 {{- end }}
+                {{- with $cronjob.volumeMounts }}
+                  {{- toYaml . | nindent 16 }}
+                {{- end }}
           volumes:
             - name: secrets
               secret:
@@ -375,6 +378,9 @@ spec:
             - name: appsecrets
               secret:
                 secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
+            {{- end }}
+            {{- with $cronjob.volumes }}
+              {{- toYaml . | nindent 12 }}
             {{- end }}
 {{- end }}
 {{- end }}
