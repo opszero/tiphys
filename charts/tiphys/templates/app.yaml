@@ -132,6 +132,9 @@ spec:
         tags.datadoghq.com/service: {{ include "opszero.fullname" $ }}-{{ $app.name }}
         tags.datadoghq.com/version: {{ $.Values.datadog.version | quote }}
       {{- end }}
+      {{- if $app.service.labelsRaw }}
+        {{- toYaml $app.service.labelsRaw | nindent 8 }}
+      {{- end }}
     spec:
       automountServiceAccountToken: false
       hostPID: false
