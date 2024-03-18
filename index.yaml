@@ -3,6 +3,21 @@ entries:
   tiphys:
   - apiVersion: v2
     appVersion: 1.16.3
+    created: "2024-03-18T19:41:48.621429419Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 17.3.11
+    description: A High Level Helm Chart
+    digest: 78478dcae625d31df08ecdf940917fd1b410e13c88cb60df873acde5d839e1f8
+    name: tiphys
+    type: application
+    urls:
+    - https://github.com/opszero/tiphys/releases/download/tiphys-0.9.25/tiphys-0.9.25.tgz
+    version: 0.9.25
+  - apiVersion: v2
+    appVersion: 1.16.3
     created: "2024-02-07T08:50:55.186346347Z"
     dependencies:
     - condition: redis.enabled
@@ -955,4 +970,4 @@ entries:
     urls:
     - https://github.com/opszero/tiphys/releases/download/tiphys-0.1.1/tiphys-0.1.1.tgz
     version: 0.1.1
-generated: "2024-02-07T08:50:55.186831657Z"
+generated: "2024-03-18T19:41:48.621892227Z"
