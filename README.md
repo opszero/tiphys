@@ -121,6 +121,8 @@ apps:
         limits:
           memory: "128Mi"
           cpu: "500m"
+      nodeSelector: # Optional
+        nat: true
       securityContext: # Optional.
         privileged: true
       autoscaling:
