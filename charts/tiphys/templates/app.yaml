@@ -294,7 +294,7 @@ metadata:
   {{- end }}
   {{- end }}
 spec:
-  ingressClassName: nginx
+  ingressClassName: {{ default "nginx" $app.service.ingress.ingressClassName | quote }}
   rules:
     {{- with $app.service.ingress }}
     {{- with $app.service.ingress.hosts }}
