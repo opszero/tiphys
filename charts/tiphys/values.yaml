@@ -1,4 +1,4 @@
-defaultImage: ""
+cdefaultImage: ""
 imagePullSecrets: []
 nameOverride: ""
 replicaCount: 1

@@ -114,6 +114,20 @@ apps:
           - host: yieldpayroll.com
             paths: ["/"]
             port: 3000
+      livenessProbe:
+            httpGet:
+              path: "/"
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            successThreshold: 1
+      readinessProbe:
+            httpGet:
+              path: "/"
+              port: 80      
+            initialDelaySeconds: 20
+            periodSeconds: 10
+            successThreshold: 1  
       resources:
         requests:
           memory: "64Mi"

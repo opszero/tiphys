@@ -190,6 +190,14 @@ spec:
               protocol: {{ $port.protocol }}
           {{- end }}
           {{- end }}
+ {{- if $app.service.livenessProbe }}
+          livenessProbe:
+{{ toYaml $app.service.livenessProbe | nindent 12 }}
+{{- end }}
+{{- if $app.service.readinessProbe }}
+          readinessProbe:
+{{ toYaml $app.service.readinessProbe | nindent 12 }}
+{{- end }}
           {{- if $app.service.resources }}
           resources:
             {{- toYaml $app.service.resources | nindent 12 }}
