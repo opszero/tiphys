@@ -153,6 +153,7 @@ apps:
       - name: hn
         command: ["bundle", "exec", "rails", "pay_people"]
         schedule: "0 * * * *"
+        timeZone: "America/Los_Angeles" # Optional
         resources:
           requests:
             memory: "64Mi"

@@ -333,6 +333,9 @@ metadata:
     {{- include "opszero.labels" $ | nindent 4 }}
 spec:
   schedule: {{ $cronjob.schedule | quote }}
+  {{- if $cronjob.timeZone }}
+  timeZone: {{ $cronjob.timeZone | quote }}
+  {{- end }}
   successfulJobsHistoryLimit: 1
   concurrencyPolicy: Replace
   jobTemplate:
