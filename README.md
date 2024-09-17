@@ -36,6 +36,7 @@ jobs:
 ```
 
 # Default image for all the apps. If an image isn't specified this one is used.
+name: yieldpayroll
 defaultImage: nginx:latest
 
 # Override with: https://artifacthub.io/packages/helm/bitnami/redis

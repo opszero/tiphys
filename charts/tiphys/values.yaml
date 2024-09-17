@@ -1,6 +1,6 @@
 defaultImage: ""
 imagePullSecrets: []
-nameOverride: ""
+name: ""
 replicaCount: 1
 
 serviceAccount:
