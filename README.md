@@ -39,6 +39,9 @@ jobs:
 name: yieldpayroll
 defaultImage: nginx:latest
 
+secretsAdditionalMounts:
+  "/1password": 1password # path, secret name
+
 # Override with: https://artifacthub.io/packages/helm/bitnami/redis
 redis:
   enabled: true # Enable Redis

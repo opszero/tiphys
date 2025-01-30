@@ -56,6 +56,13 @@ spec:
               mountPath: "/app-secrets"
               readOnly: true
             {{- end }}
+            {{- if $.Values.secretsAdditionalMounts }}
+            {{- range $name, $path := $.Values.secretsAdditionalMounts }}
+            - name: {{ $name }}
+              mountPath: {{ $path | quote }}
+              readOnly: true
+            {{- end }}
+            {{- end }}
       volumes:
         - name: secrets
           secret:
@@ -64,6 +71,13 @@ spec:
         - name: appsecrets
           secret:
             secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
+        {{- end }}
+        {{- if $.Values.secretsAdditionalMounts }}
+        {{- range $name, $path := $.Values.secretsAdditionalMounts }}
+        - name: {{ $name }}
+          secret:
+            secretName: {{ $name }}
+        {{- end }}
         {{- end }}
 {{- end }}
 {{- end }}
@@ -206,6 +220,13 @@ spec:
               mountPath: "/app-secrets"
               readOnly: true
             {{- end }}
+            {{- if $.Values.secretsAdditionalMounts }}
+            {{- range $name, $path := $.Values.secretsAdditionalMounts }}
+            - name: {{ $name }}
+              mountPath: {{ $path | quote }}
+              readOnly: true
+            {{- end }}
+            {{- end }}
         {{- with $app.service.volumeMounts }}
            {{- toYaml . | nindent 12 }}
         {{- end }}
@@ -217,6 +238,13 @@ spec:
         - name: appsecrets
           secret:
             secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
+        {{- end }}
+        {{- if $.Values.secretsAdditionalMounts }}
+        {{- range $name, $path := $.Values.secretsAdditionalMounts }}
+        - name: {{ $name }}
+          secret:
+            secretName: {{ $name }}
+        {{- end }}
         {{- end }}
         {{- with $app.service.volumes }}
           {{- toYaml . | nindent 8 }}
@@ -377,6 +405,13 @@ spec:
                   mountPath: "/app-secrets"
                   readOnly: true
                 {{- end }}
+                {{- if $.Values.secretsAdditionalMounts }}
+                {{- range $name, $path := $.Values.secretsAdditionalMounts }}
+                - name: {{ $name }}
+                  mountPath: {{ $path | quote }}
+                  readOnly: true
+                {{- end }}
+                {{- end }}
                 {{- with $cronjob.volumeMounts }}
                   {{- toYaml . | nindent 16 }}
                 {{- end }}
@@ -388,6 +423,13 @@ spec:
             - name: appsecrets
               secret:
                 secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
+            {{- end }}
+            {{- if $.Values.secretsAdditionalMounts }}
+            {{- range $name, $path := $.Values.secretsAdditionalMounts }}
+            - name: {{ $name }}
+              secret:
+                secretName: {{ $name }}
+            {{- end }}
             {{- end }}
             {{- with $cronjob.volumes }}
               {{- toYaml . | nindent 12 }}
