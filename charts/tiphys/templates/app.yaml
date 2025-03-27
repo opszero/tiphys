@@ -374,7 +374,7 @@ spec:
           containers:
             - name: app
               image: {{ default $.Values.defaultImage $app.image | quote }}
-              imagePullPolicy: Always
+              imagePullPolicy: {{ default "Always" $app.service.imagePullPolicy | quote }}
               {{- if $app.imagePullSecrets }}
               imagePullSecrets:
               {{- toYaml default $app.imagePullSecrets | nindent 16 }}
