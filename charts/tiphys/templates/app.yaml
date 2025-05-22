@@ -154,7 +154,7 @@ spec:
       nodeSelector:
         {{- toYaml $app.service.nodeSelector | nindent 8 }}
       {{- end }}
-      automountServiceAccountToken: false
+      automountServiceAccountToken: true
       hostPID: false
       hostIPC: false
       hostNetwork: false
