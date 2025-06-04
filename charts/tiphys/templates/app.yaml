@@ -345,7 +345,7 @@ spec:
               command: ["bash", "-c", {{ $cronjob.command | join " " | quote}}]
               envFrom:
                 - secretRef:
-                    name: {{ template "opszero.fullname" $ }}
+                    name: {{ $app.name }}
               env:
                 - name: TIPHYS_APP
                   value: {{ $app.name }}
