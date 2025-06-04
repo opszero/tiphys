@@ -29,5 +29,5 @@ jobs:
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           CR_SKIP_EXISTING: true
-          version: 1.9.17
+          version: 0.9.17.0
           mark_as_latest: false
