@@ -29,7 +29,7 @@ spec:
           command: ["bash", "-c", {{ $job.command | join " " | quote}}]
           envFrom:
             - secretRef:
-                name: {{ template "opszero.fullname" $ }}
+                name: {{ $app.name }}
           env:
             - name: TIPHYS_APP
               value: {{ $app.name }}
@@ -166,7 +166,7 @@ spec:
           {{- end }}
           envFrom:
             - secretRef:
-                name: {{ template "opszero.fullname" $ }}
+                name: {{ $app.name }}
           {{- if $app.secrets }}
             - secretRef:
                 name: {{ template "opszero.fullname" $ }}-{{ $app.name }}
