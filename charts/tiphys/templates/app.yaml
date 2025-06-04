@@ -91,6 +91,25 @@ spec:
 
   {{- end }}
 
+  {{- if $app.pdb }}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: {{ include "opszero.fullname" $ }}-{{ $app.name }}-pdb
+  labels:
+    {{- include "opszero.labels" $ | nindent 4 }}
+spec:
+  selector:
+    matchLabels:
+      {{- include "opszero.selectorLabels" $ | nindent 6 }}-{{ $app.name }}
+  {{- if $app.pdb.minAvailable }}
+  minAvailable: {{ $app.pdb.minAvailable }}
+  {{- else if $app.pdb.maxUnavailable }}
+  maxUnavailable: {{ $app.pdb.maxUnavailable }}
+  {{- end }}
+  {{- end }}
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -191,7 +210,7 @@ spec:
       volumes:
         - name: secrets
           secret:
-            secretName: {{ template "opszero.fullname" $ }}
+            secretName: {{ $app.name }}
         {{- if $app.secrets }}
         - name: appsecrets
           secret:
@@ -352,7 +371,7 @@ spec:
           volumes:
             - name: secrets
               secret:
-                secretName: {{ template "opszero.fullname" $ }}
+                secretName: {{ $app.name }}
             {{- if $app.secrets }}
             - name: appsecrets
               secret:
