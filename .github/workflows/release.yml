@@ -3,7 +3,7 @@ name: Release Charts
 on:
   push:
     branches:
-      - update
+      - tiphys-0.9.17-4
 
 jobs:
   release:
@@ -29,5 +29,5 @@ jobs:
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           CR_SKIP_EXISTING: true
-          version: 0.9.17-3
+          version: 0.9.17-4
           mark_as_latest: false

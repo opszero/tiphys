@@ -149,6 +149,7 @@ spec:
       {{- end }}
     spec:
       automountServiceAccountToken: false
+      terminationGracePeriodSeconds: {{ default 30 $app.service.terminationGracePeriodSeconds }}
       hostPID: false
       hostIPC: false
       hostNetwork: false
