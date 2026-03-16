@@ -148,6 +148,10 @@ spec:
         tags.datadoghq.com/version: {{ $.Values.datadog.version | quote }}
       {{- end }}
     spec:
+      {{- if $app.service.nodeSelector }}
+      nodeSelector:
+        {{- toYaml $app.service.nodeSelector | nindent 8 }}
+      {{- end }}
       automountServiceAccountToken: false
       terminationGracePeriodSeconds: {{ default 30 $app.service.terminationGracePeriodSeconds }}
       hostPID: false
