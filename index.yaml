@@ -258,6 +258,21 @@ entries:
     version: 0.9.17
   - apiVersion: v2
     appVersion: 1.16.3
+    created: "2026-03-16T04:37:37.567495741Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 17.3.11
+    description: A High Level Helm Chart
+    digest: 9259dde89878272b878835b21ef566b4009068ef0c974a12e75a4255e7638b52
+    name: tiphys
+    type: application
+    urls:
+    - https://github.com/opszero/tiphys/releases/download/tiphys-0.9.17-7/tiphys-0.9.17-7.tgz
+    version: 0.9.17-7
+  - apiVersion: v2
+    appVersion: 1.16.3
     created: "2026-03-16T03:05:28.109753108Z"
     dependencies:
     - condition: redis.enabled
@@ -318,21 +333,6 @@ entries:
     version: 0.9.17-4
   - apiVersion: v2
     appVersion: 1.16.3
-    created: "2025-07-15T09:19:29.388714728Z"
-    dependencies:
-    - condition: redis.enabled
-      name: redis
-      repository: https://charts.bitnami.com/bitnami
-      version: 17.3.11
-    description: A High Level Helm Chart
-    digest: 17cb78825de6ed86f58a754c84b1d0133a34515d92e35513759dde7c78f34fbd
-    name: tiphys
-    type: application
-    urls:
-    - https://github.com/opszero/tiphys/releases/download/tiphys-0.9.17-3/tiphys-0.9.17-3.tgz
-    version: 0.9.17-3
-  - apiVersion: v2
-    appVersion: 1.16.3
     created: "2025-06-04T06:29:04.743991551Z"
     dependencies:
     - condition: redis.enabled
@@ -341,6 +341,21 @@ entries:
       version: 17.3.11
     description: A High Level Helm Chart
     digest: e8a36dd2c9dd86e7f8745d58c453c11660607582158ff105a4a6ba12ed43789c
+    name: tiphys
+    type: application
+    urls:
+    - https://github.com/opszero/tiphys/releases/download/tiphys-0.9.17-3/tiphys-0.9.17-3.tgz
+    version: 0.9.17-3
+  - apiVersion: v2
+    appVersion: 1.16.3
+    created: "2025-07-15T09:19:29.388714728Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 17.3.11
+    description: A High Level Helm Chart
+    digest: 17cb78825de6ed86f58a754c84b1d0133a34515d92e35513759dde7c78f34fbd
     name: tiphys
     type: application
     urls:
@@ -1210,4 +1225,4 @@ entries:
     urls:
     - https://github.com/opszero/tiphys/releases/download/tiphys-0.1.1/tiphys-0.1.1.tgz
     version: 0.1.1
-generated: "2026-03-16T03:05:28.110358833Z"
+generated: "2026-03-16T04:37:37.568080905Z"
