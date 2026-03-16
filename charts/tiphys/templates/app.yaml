@@ -255,21 +255,28 @@ spec:
   scaleTargetRef:
     name: {{ include "opszero.fullname" $ }}-{{ $app.name }}
     kind: Deployment
+
   minReplicaCount: {{ default $.Values.autoscaling.minReplicas $app.service.autoscaling.minReplicas }}
   maxReplicaCount: {{ default $.Values.autoscaling.maxReplicas $app.service.autoscaling.maxReplicas }}
-  cooldownPeriod: 60
+
+  pollingInterval: {{ default 30 $app.service.autoscaling.pollingInterval }}
+  cooldownPeriod: {{ default 60 $app.service.autoscaling.cooldownPeriod }}
+
   triggers:
-  - type: cpu
-    metadata:
-      type: Utilization
-      value: {{ default $.Values.autoscaling.targetCPUUtilizationPercentage $app.service.autoscaling.targetCPUUtilizationPercentage | quote }}
-  - type: memory
-    metadata:
-      type: Utilization
-      value: {{ default $.Values.autoscaling.targetMemoryUtilizationPercentage $app.service.autoscaling.targetMemoryUtilizationPercentage | quote }}
-  {{- with $app.service.autoscaling.kedaTriggers }}
-  {{- toYaml . | nindent 2 }}
+  {{- if $app.service.autoscaling.triggers }}
+    {{- toYaml $app.service.autoscaling.triggers | nindent 4 }}
+  {{- else }}
+    - type: cpu
+      metadata:
+        type: Utilization
+        value: "{{ default $.Values.autoscaling.targetCPUUtilizationPercentage $app.service.autoscaling.targetCPUUtilizationPercentage }}"
+
+    - type: memory
+      metadata:
+        type: Utilization
+        value: "{{ default $.Values.autoscaling.targetMemoryUtilizationPercentage $app.service.autoscaling.targetMemoryUtilizationPercentage }}"
   {{- end }}
+
 {{- end }}
 {{- end }}
 
