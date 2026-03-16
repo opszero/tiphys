@@ -381,9 +381,6 @@ spec:
                   readOnly: true
                 {{- end }}
           volumes:
-            - name: secrets
-              secret:
-                secretName: {{ template "opszero.fullname" $ }}-{{ $app.name }}
             {{- if $app.secrets }}
             - name: appsecrets
               secret:
