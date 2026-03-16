@@ -372,9 +372,6 @@ spec:
                 {{- toYaml $cronjob.resources | nindent 16 }}
               {{- end }}
               volumeMounts:
-                - name: secrets
-                  mountPath: "/secrets"
-                  readOnly: true
                 {{- if $app.secrets }}
                 - name: appsecrets
                   mountPath: "/app-secrets"
