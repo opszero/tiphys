@@ -170,8 +170,8 @@ spec:
           command: ["bash", "-c", {{ $app.service.command | join " " | quote}}]
           {{- end }}
           envFrom:
-            - secretRef:
-                name: {{ $app.name }}
+#            - secretRef:
+#                name: {{ $app.name }}
           {{- if $app.secrets }}
             - secretRef:
                 name: {{ template "opszero.fullname" $ }}-{{ $app.name }}
@@ -201,9 +201,9 @@ spec:
           {{ toYaml . | nindent 10 }}
           {{- end }}
           volumeMounts:
-            - name: secrets
-              mountPath: "/secrets"
-              readOnly: true
+#            - name: secrets
+#              mountPath: "/secrets"
+#              readOnly: true
             {{- if $app.secrets }}
             - name: appsecrets
               mountPath: "/app-secrets"
@@ -213,9 +213,9 @@ spec:
            {{- toYaml . | nindent 12 }}
         {{- end }}
       volumes:
-        - name: secrets
-          secret:
-            secretName: {{ $app.name }}
+#        - name: secrets
+#          secret:
+#            secretName: {{ $app.name }}
         {{- if $app.secrets }}
         - name: appsecrets
           secret:
