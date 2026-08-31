@@ -281,6 +281,7 @@ spec:
 {{- end }}
 
 {{- if and $app.service.ingress $app.service.ingress.hosts}}
+{{- $ingressClassName := $app.service.ingress.ingressClassName | default "nginx" }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -289,22 +290,22 @@ metadata:
   labels:
     {{- include "opszero.labels" $ | nindent 4 }}
   annotations:
+  {{- if eq $ingressClassName "nginx" }}
     cert-manager.io/cluster-issuer: letsencrypt
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "120"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "120"
     nginx.ingress.kubernetes.io/proxy-read-timeout: "120"
     nginx.ingress.kubernetes.io/proxy-next-upstream-timeout: "120"
     nginx.ingress.kubernetes.io/proxy-body-size: "128m"
+  {{- end }}
   {{- with $.Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{ if $app.service.ingress }}
   {{- with $app.service.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
   {{- end }}
-  {{- end }}
 spec:
-    ingressClassName: {{ default "nginx" $app.service.ingress.ingressClassName }}
+  ingressClassName: {{ $ingressClassName | quote }}
   rules:
     {{- with $app.service.ingress }}
     {{- with $app.service.ingress.hosts }}
@@ -324,12 +325,14 @@ spec:
     {{- end }}
     {{- end }}
     {{- end }}
+  {{- if eq $ingressClassName "nginx" }}
   tls:
     - hosts:
     {{- range $app.service.ingress.hosts }}
         - {{ .host }}
     {{- end }}
       secretName: {{ include "opszero.fullname" $ }}-{{ $app.name }}-tls
+  {{- end }}
 {{- end -}}
 {{- end }}
 
